@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         'mainGreen': "#13ADB7",
+        'mixingGreen': '#29D1D9'
       },
       backgroundImage: {
         'landingPageBanner': "url('./assets/landingPage/mainBanner2.jpg')"

@@ -8,17 +8,17 @@ import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="App h-full w-full">
+    <div className="h-full w-full ">
       {/* <p className='text-red-400'>hiiiii app</p> */}
       <Navbar />
       <Hero />
-      <div className=''>
 
-        <About />
-        <Charities />
-        <CelebDonation />
-        <Footer />
-      </div>
+
+      {/* <About />
+        <Charities /> */}
+      <CelebDonation />
+      <Footer />
+
     </div>
   );
 }

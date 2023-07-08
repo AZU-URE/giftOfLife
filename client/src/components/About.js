@@ -1,9 +1,9 @@
 import React from 'react'
 
-const About = () => {
+const About = ({ aboutRef }) => {
     return (
-        <section>
-            about us and faq
+        <section ref={aboutRef}>
+
         </section>
     )
 }

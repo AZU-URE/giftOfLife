@@ -2,9 +2,9 @@ import React from 'react'
 import CelebCard from './CelebCard'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 
-const CelebDonation = () => {
+const CelebDonation = ({ CelebRef }) => {
     return (
-        <section id="CelebDonation" className='p-10 px-24 pt-16 bg-teal-50/70'>
+        <section ref={CelebRef} id="CelebDonation" className='p-10 px-24 pt-20 bg-teal-50/70'>
             <p className='w-full text-center text-4xl font-dmSans font-medium mb-16'><span className='text-mainGreen'>Celeb</span>  Donations</p>
             <div className='grid grid-cols-3 gap-6 items-center justify-around '>
                 <CelebCard />

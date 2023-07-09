@@ -21,7 +21,7 @@ const Navbar = ({ aboutRef, CharitiesRef, CelebRef }) => {
                         <li onClick={clickCeleb}>Celeb Donation</li>
                     </ul>
                     <div className='flex space-x-3'>
-                        <button className='bg-mainGreen rounded-md hover:bg-mainGreen/80 text-white p-2 px-3.5 font-medium'>SignIn</button>
+                        <button className='bg-mainGreen rounded-md hover:bg-mainGreen/80 text-white p-2 px-3.5 font-medium'>Connect</button>
                         <button className='bg-transparent rounded-md hover:bg-mainGreen/80 hover:text-white border-[2px] border-mainGreen text-mainGreen p-2 px-3.5 font-medium'>SignUp</button>
                         {/* <button className='bg-mainGreen rounded-md p-0.5 font-medium'><p className='bg-slate-800 rounded-md p-1.5 px-3 hover:text-white text-mainGreen hover:bg-mainGreen'>SignUp</p></button> */}
                     </div>

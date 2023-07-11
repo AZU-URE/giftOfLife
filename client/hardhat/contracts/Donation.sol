@@ -2,81 +2,247 @@
 
 pragma solidity ^0.8.18;
 
-contract Donation{
+contract Donation {
     // -------------definitions-------------
 
-// defining organ types
-    enum Organ {liver,eye,kidney,lung,pacreas}
-// defining bloodgroups
-    enum BloodGroup {Apos,Aneg,Bpos,Bneg,Opos,Oneg,ABpos,ABneg}
-// info of the receiver -patient
-    struct Receiver{
+    // defining organ types
+    enum Organ {
+        liver,
+        eye,
+        kidney,
+        lung,
+        pacreas
+    }
+    // defining bloodgroups
+    enum BloodGroup {
+        Apos,
+        Aneg,
+        Bpos,
+        Bneg,
+        Opos,
+        Oneg,
+        ABpos,
+        ABneg
+    }
+
+    // doner or receiver
+
+    enum UserType {
+        Doner,
+        Receiver
+    }
+    // info of the receiver -patient
+    struct User {
         address account;
         string name;
         bool received;
-        bool verified;
-        Organ organ;
-        BloodGroup bloodGroup;
-        // address[] nftAddress;
-    }
-    
-// info of doner - giver
-    struct Doner{
-        address account;
-        string name;
         bool donated;
         bool verified;
         Organ organ;
         BloodGroup bloodGroup;
+        UserType userType;
         // address[] nftAddress;
     }
 
-// doctor's info 
-    struct Doctor{
+    // doctor's info
+    struct Doctor {
         address account;
         string name;
         string license;
     }
-// The delivery person's info
-// {receiver,doner,delivered} will be reset after successful delivery
-    struct Delivery{
-        address account;
-        string name;
-        Doner doner;
-        Receiver receiver;
-        bool delivered;
+
+    struct Matched {
+        User donor;
+        User receiver;
     }
-Receiver[] receivers;
-Doner[] doners;
-Doctor[] doctors;
-mapping(address => address) donations;
-mapping(address =>Receiver[]) receiversVerified;
-mapping(address =>Doner[]) donersVerified;
 
+    User[] public receivers;
+    User[] public doners;
+    Doctor[] public doctors;
+    mapping(address => address) public whoVerified; // mapping od user => doctor , tells that the user is verified by whome
+    mapping(address => address) public donations; // receiver=>donor
+    User[] public receiversVerified;
+    User[] public donersVerified;
+    Matched[] public matchedProfiles;
 
-// -----------------functions-----------------
+    // -----------------modifier-----------------
 
-// _organ must be [0,4]
-// _bloodGroup must be [0,7]
+    modifier Onlydoctor() {
+        bool doctorExists = false;
+        for (uint i = 0; i < doctors.length; i++) {
+            if (doctors[i].account == msg.sender) {
+                doctorExists = true;
+                break;
+            }
+        }
+        require(doctorExists, "You are not a doctor");
+        _;
+    }
 
-    function setReceiver(address _account,string memory _name,Organ _organ,BloodGroup _bloodGroup) public returns (bool){
-        Receiver memory receiver = Receiver(_account,_name,false,false,_organ,_bloodGroup);
-        receivers.push(receiver);
+    modifier onlyVerfied(User memory _user) {
+        require(_user.verified == true, "You are not yet verified");
+        _;
+    }
+
+    // -----------------events-------------------
+
+    event MatchFound(Matched indexed _matched, string indexed msg);
+    event MatchNotFound(string indexed msg);
+    event OrganReceived(
+        address indexed donor,
+        address indexed receiver,
+        string msg
+    );
+
+    // -----------------functions-----------------
+
+    // _organ must be [0,4]
+    // _bloodGroup must be [0,7]
+
+    function setUser(
+        address _account,
+        string memory _name,
+        Organ _organ,
+        BloodGroup _bloodGroup,
+        UserType _userType
+    ) public returns (bool) {
+        User memory user = User(
+            _account,
+            _name,
+            false,
+            false,
+            false,
+            _organ,
+            _bloodGroup,
+            _userType
+        );
+        if (_userType == UserType.Doner) {
+            doners.push(user);
+        } else {
+            receivers.push(user);
+        }
         return true;
     }
 
-    function setDoner(address _account,string memory _name,Organ _organ,BloodGroup _bloodGroup) public returns (bool){
-        Doner memory doner = Doner(_account,_name,false,false,_organ,_bloodGroup);
-        doners.push(doner);
-        return true;
-    }
-
-    function setDoctor(address _account,string memory _name,string memory _license) public returns (bool){
-        Doctor memory doctor = Doctor(_account,_name,_license);
+    function setDoctor(
+        address _account,
+        string memory _name,
+        string memory _license
+    ) public returns (bool) {
+        Doctor memory doctor = Doctor(_account, _name, _license);
         doctors.push(doctor);
         return true;
     }
-     
 
-    
+    function verify(User memory _user) public Onlydoctor {
+        _user.verified = true;
+        whoVerified[_user.account] = msg.sender;
+        if (_user.userType == UserType.Doner) {
+            donersVerified.push(_user);
+        } else {
+            receiversVerified.push(_user);
+        }
+    }
+
+    // will show matches for whatever user calls the function : for only verified
+    function pair(User memory _user) private onlyVerfied(_user) {
+        bool matchFound = false;
+        if (_user.userType == UserType.Doner) {
+            // if user is a donor needs to check for receiver
+            for (uint i = 0; i < receiversVerified.length; i++) {
+                if (receiversVerified[i].organ == _user.organ) {
+                    if (receiversVerified[i].bloodGroup == _user.bloodGroup) {
+                        Matched memory matched = Matched(
+                            _user,
+                            receiversVerified[i]
+                        );
+                        matchedProfiles.push(matched);
+                        emit MatchFound(matched, "Match found");
+                        matchFound = true;
+                    }
+                }
+            }
+
+            if (!matchFound) {
+                emit MatchNotFound("Match not found");
+            }
+        } else {
+            // if user is a receiver needs to check for doner
+            for (uint i = 0; i < donersVerified.length; i++) {
+                if (donersVerified[i].organ == _user.organ) {
+                    if (donersVerified[i].bloodGroup == _user.bloodGroup) {
+                        Matched memory matched = Matched(
+                            donersVerified[i],
+                            _user
+                        );
+                        matchedProfiles.push(matched);
+                        emit MatchFound(matched, "Match found");
+                        matchFound = true;
+                    }
+                }
+            }
+
+            if (!matchFound) {
+                emit MatchNotFound("Match not found");
+            }
+        }
+    }
+
+    // function to obtain array of matched profiles for particular user
+
+    function getMatchProfile(
+        User memory _user
+    ) public onlyVerfied(_user) returns (User[] memory) {
+        User[] memory _profiles;
+        pair(_user);
+
+        if (_user.userType == UserType.Doner) {
+            // user is doner
+            for (uint i = 0; i < matchedProfiles.length; i++) {
+                if (_user.account == matchedProfiles[i].donor.account) {
+                    _profiles[_profiles.length] = matchedProfiles[i].receiver;
+                }
+            }
+        } else {
+            // user is receiver
+            for (uint i = 0; i < matchedProfiles.length; i++) {
+                if (_user.account == matchedProfiles[i].receiver.account) {
+                    _profiles[_profiles.length] = matchedProfiles[i].donor;
+                }
+            }
+        }
+
+        return _profiles;
+    }
+
+    // donate
+    function donate(User memory _user) public returns (bool) {
+        require(
+            _user.received != true,
+            "Already received, let us give chnc to others"
+        );
+        address donor = msg.sender;
+        address receiver = _user.account;
+        bool matchVerified = false;
+
+        for (uint i = 0; i < matchedProfiles.length; i++) {
+            if (
+                matchedProfiles[i].donor.account == donor &&
+                matchedProfiles[i].receiver.account == receiver
+            ) {
+                matchVerified = true;
+                matchedProfiles[i].donor.donated = true;
+                matchedProfiles[i].receiver.verified = true;
+                emit OrganReceived(donor, receiver, "Received");
+                break;
+            }
+        }
+
+        if (matchVerified) {
+            donations[receiver] = donor;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

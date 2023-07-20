@@ -1,28 +1,35 @@
 import './App.css';
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Charities from './components/Charities'
-import CelebDonation from './components/CelebDonation'
-import Footer from './components/Footer'
 import { useRef } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Home from './components/Home';
+import AllDoctors from './components/allDoctors/AllDoctors'
+import DoctorDetails from './components/allDoctors/DoctorDetails'
+import AllDonors from './components/allDonors/AllDonors'
+import DonorDetails from './components/allDonors/DonorDetail'
+import AllReceivers from './components/allReceivers/AllReceivers'
+import ReceiverDetail from './components/allReceivers/ReceiverDetail'
+
 
 function App() {
 
   const aboutRef = useRef(null)
-  const CharitiesRef = useRef(null)
-  const CelebRef = useRef(null)
-  return (
-    <div className="h-full w-full ">
-      {/* <p className='text-red-400'>hiiiii app</p> */}
-      <Navbar CharitiesRef={CharitiesRef} aboutRef={aboutRef} CelebRef={CelebRef} />
-      <Hero />
-      <Charities CharitiesRef={CharitiesRef} />
-      <About aboutRef={aboutRef} />
-      <CelebDonation CelebRef={CelebRef} />
-      <Footer />
+  const ReceiversRef = useRef(null)
+  const DoctorRef = useRef(null)
 
-    </div>
+  return (
+    <BrowserRouter>
+      <Navbar ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />
+      <div className="h-full w-full ">
+        <Routes>
+          <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
+          <Route path='/allDoctors' exact element={<AllDoctors />} />
+          <Route path='/allPatients' exact element={<AllReceivers />} />
+          <Route path='/allDonors' exact element={<AllDonors />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+
   );
 }
 

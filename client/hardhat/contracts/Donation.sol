@@ -28,7 +28,7 @@ contract Donation {
     // doner or receiver
 
     enum UserType {
-        Doner,
+        Donor,
         Receiver
     }
     // info of the receiver -patient
@@ -57,7 +57,7 @@ contract Donation {
     }
 
     User[] public receivers;
-    User[] public doners;
+    User[] public donors;
     Doctor[] public doctors;
     mapping(address => address) public whoVerified; // mapping od user => doctor , tells that the user is verified by whome
     mapping(address => address) public donations; // receiver=>donor
@@ -96,6 +96,8 @@ contract Donation {
 
     // -----------------functions-----------------
 
+    // --------------setter functions---------------
+
     // _organ must be [0,4]
     // _bloodGroup must be [0,7]
 
@@ -116,8 +118,8 @@ contract Donation {
             _bloodGroup,
             _userType
         );
-        if (_userType == UserType.Doner) {
-            doners.push(user);
+        if (_userType == UserType.Donor) {
+            donors.push(user);
         } else {
             receivers.push(user);
         }
@@ -134,10 +136,38 @@ contract Donation {
         return true;
     }
 
+    // --------------getter functions---------------
+
+    function getDonors() external view returns (User[] memory) {
+        return donors;
+    }
+
+    function getReceivers() public view returns (User[] memory) {
+        return receivers;
+    }
+
+    function getDoctors() public view returns (Doctor[] memory) {
+        return doctors;
+    }
+
+    function getVerifiedReceivers() public view returns (User[] memory) {
+        return receiversVerified;
+    }
+
+    function getVerifiedDoners() public view returns (User[] memory) {
+        return donersVerified;
+    }
+
+    function getMatchedProfiles() public view returns (Matched[] memory) {
+        return matchedProfiles;
+    }
+
+    // ----------- functionalities------------------
+
     function verify(User memory _user) public Onlydoctor {
         _user.verified = true;
         whoVerified[_user.account] = msg.sender;
-        if (_user.userType == UserType.Doner) {
+        if (_user.userType == UserType.Donor) {
             donersVerified.push(_user);
         } else {
             receiversVerified.push(_user);
@@ -147,7 +177,7 @@ contract Donation {
     // will show matches for whatever user calls the function : for only verified
     function pair(User memory _user) private onlyVerfied(_user) {
         bool matchFound = false;
-        if (_user.userType == UserType.Doner) {
+        if (_user.userType == UserType.Donor) {
             // if user is a donor needs to check for receiver
             for (uint i = 0; i < receiversVerified.length; i++) {
                 if (receiversVerified[i].organ == _user.organ) {
@@ -196,7 +226,7 @@ contract Donation {
         User[] memory _profiles;
         pair(_user);
 
-        if (_user.userType == UserType.Doner) {
+        if (_user.userType == UserType.Donor) {
             // user is doner
             for (uint i = 0; i < matchedProfiles.length; i++) {
                 if (_user.account == matchedProfiles[i].donor.account) {

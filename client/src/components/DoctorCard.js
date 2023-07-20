@@ -1,7 +1,7 @@
 import React from 'react'
 import pic from '../assets/landingPage/celebpic/garima2.jpg'
 
-const CelebCard = () => {
+const DoctorCard = () => {
     return (
         <div className='flex flex-col items-center w-fit mb-10'>
             <div className='w-54 h-54 bg-black rounded-full z-10 border-mainGreen/70 border-4' >
@@ -15,4 +15,4 @@ const CelebCard = () => {
     )
 }
 
-export default CelebCard
+export default DoctorCard

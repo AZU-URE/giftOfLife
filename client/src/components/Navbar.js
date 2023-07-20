@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from '../utils/connect'
 
-const Navbar = ({ aboutRef, CharitiesRef, CelebRef }) => {
+const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
     const clickAbout = () => {
         aboutRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
-    const clickCharities = () => {
-        CharitiesRef.current?.scrollIntoView({ behaviour: 'smooth' })
+    const clickPatients = () => {
+        ReceiversRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
-    const clickCeleb = () => {
-        CelebRef.current?.scrollIntoView({ behaviour: 'smooth' })
+    const clickDoctors = () => {
+        DoctorRef.current?.scrollIntoView({ behaviour: 'smooth' })
+    }
+
+    const handleConnect = () => {
+        connect()
+        // console.log("hii");
     }
     return (
         <>
@@ -17,11 +23,11 @@ const Navbar = ({ aboutRef, CharitiesRef, CelebRef }) => {
                     <ul className='float-left flex space-x-4 text-white'>
                         <li className='text-mainGreen'>logo</li>
                         <li className='' onClick={clickAbout}>About</li>
-                        <li onClick={clickCharities}>Charities</li>
-                        <li onClick={clickCeleb}>Celeb Donation</li>
+                        <li onClick={clickPatients}>Patients</li>
+                        <li onClick={clickDoctors}>Doctors</li>
                     </ul>
                     <div className='flex space-x-3'>
-                        <button className='bg-mainGreen rounded-md hover:bg-mainGreen/80 text-white p-2 px-3.5 font-medium'>Connect</button>
+                        <button onClick={handleConnect} className='bg-mainGreen rounded-md hover:bg-mainGreen/80 text-white p-2 px-3.5 font-medium'>Connect</button>
                         <button className='bg-transparent rounded-md hover:bg-mainGreen/80 hover:text-white border-[2px] border-mainGreen text-mainGreen p-2 px-3.5 font-medium'>SignUp</button>
                         {/* <button className='bg-mainGreen rounded-md p-0.5 font-medium'><p className='bg-slate-800 rounded-md p-1.5 px-3 hover:text-white text-mainGreen hover:bg-mainGreen'>SignUp</p></button> */}
                     </div>

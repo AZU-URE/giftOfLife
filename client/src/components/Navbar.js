@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from '../utils/connect'
+import useConnect from '../hook/useConnect'
 
 const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
+    const { setAccount, account } = useConnect()
+
     const clickAbout = () => {
         aboutRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
@@ -12,9 +15,14 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
         DoctorRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
 
-    const handleConnect = () => {
-        connect()
-        // console.log("hii");
+    const handleConnect = async () => {
+        try {
+            const { contract, provider, signer } = await connect()
+            setAccount({ contract, provider, signer })
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
     return (
         <>

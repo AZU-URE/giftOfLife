@@ -1,13 +1,13 @@
 // import React, { useState } from 'react'
-import img from '../assets/landingPage/mainBanner.jpg'
+import img from '../../assets/landingPage/mainBanner.jpg'
 // import { BsBookmark } from 'react-icons/bs'
 // import { BsFillBookmarkFill } from 'react-icons/bs'
 
 const ReceiverCard = () => {
     return (
-        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow flex flex-col space-y-5 mb-5" >
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow flex flex-col space-y-5 mb-5" >
 
-            <img class="rounded-t-lg" src={img} alt="" />
+            <img className="rounded-t-lg" src={img} alt="" />
             <div className='px-5 flex flex-col space-y-5'>
 
                 <div className='flex items-center justify-between'>
@@ -15,9 +15,9 @@ const ReceiverCard = () => {
                     <p className='text-gray-400'>Donor name</p>
                     <p className='text-mainGreen'>Organ</p>
                 </div>
-                <p class="text-3xl font-bold text-gray-900">Name Person</p>
+                <p className="text-3xl font-bold text-gray-900">Name Person</p>
 
-                <p class="font-normal text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse earum id error vel beatae, molestiae fugit illum magnam dolore iure officiis consectetur harum,</p>
+                <p className="font-normal text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse earum id error vel beatae, molestiae fugit illum magnam dolore iure officiis consectetur harum,</p>
                 <div className='flex space-x-4 '>
 
                 </div>

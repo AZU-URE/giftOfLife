@@ -13,7 +13,7 @@ const Hero = () => {
         }
     }
 
-    const handleReceive = () => { }
+    // const handleReceive = () => { }
     return (
         <section className=' w-full h-[100vh] overflow-hidden flex bg-slate-500'>
             <div className='w-full bg-black'>

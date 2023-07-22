@@ -1,5 +1,5 @@
 import React from 'react'
-import pic from '../assets/landingPage/celebpic/garima2.jpg'
+import pic from '../../assets/landingPage/celebpic/garima2.jpg'
 
 const DoctorCard = () => {
     return (

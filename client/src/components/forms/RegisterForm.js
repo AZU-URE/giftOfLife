@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useConnect from '../../hook/useConnect'
 import { useForm } from 'react-hook-form'
 
 const Donate = () => {
     const { contract, account } = useConnect()
     const { register, handleSubmit } = useForm()
+    // const [dono]
 
     const handleSubmitBtn = async (data) => {
-        // await contract.setUser(account?.signer?.address, data.name, data.organ, data.bloodGroup, data.userType)
-        console.log(await contract.getDonors());
+        const tx = await contract.setUser(account?.signer?.address, data.name, data.organ, data.bloodGroup, data.userType)
+        await tx.wait
+        console.log(`tx hash is : ${tx.hash}`);
+        // console.log(await contract.getDonors());
         // console.log(data.name);
     }
+    // useEffect(async () => {
+    //     console.log(await contract.getDonors());
+
+    // })
     return (
         <form onSubmit={handleSubmit(handleSubmitBtn)} className='flex flex-col space-y-8 border-2 rounded-md border-mainGreen p-10'>
             <div className='flex space-x-8 items-center justify-between'>

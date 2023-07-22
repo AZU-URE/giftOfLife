@@ -4,8 +4,7 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 
 const Receivers = ({ ReceiversRef }) => {
     return (
-        <section ref={ReceiversRef} id="Receivers
-    " className='p-10 px-24 pt-20 bg-teal-50/70'>
+        <section ref={ReceiversRef} id="Receivers" className='p-10 px-24 pt-20 bg-teal-50/70'>
             <p className='w-full text-center text-4xl font-dmSans font-medium mb-16'>Happy<span className='text-mainGreen'> Patients</span></p>
             <div className='grid grid-cols-3 gap-6 items-center justify-around '>
                 <ReceiverCard />

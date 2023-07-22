@@ -12,7 +12,6 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ContractProvider>
-        <Navbar />
         <Routes>
           {/* <<App /> */}
           <Route path='/*' element={<App />} />

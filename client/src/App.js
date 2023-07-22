@@ -22,17 +22,19 @@ function App() {
   //   console.log("hiiii");
   // })
   return (
-
-    <Routes>
-      <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
-      <Route path='/register' exact element={<Register />} />
-      <Route path='/doctors' exact element={<AllDoctors />} />
-      <Route path='/doctors/:id' exact element={<DoctorDetails />} />
-      <Route path='/patients' exact element={<AllReceivers />} />
-      <Route path='/patients/:id' exact element={<ReceiverDetail />} />
-      <Route path='/donors' exact element={<AllDonors />} />
-      <Route path='/donors/:id' exact element={<DonorDetails />} />
-    </Routes>
+    <>
+      <Navbar ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />
+      <Routes>
+        <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
+        <Route path='/register' exact element={<Register />} />
+        <Route path='/doctors' exact element={<AllDoctors />} />
+        <Route path='/doctors/:id' exact element={<DoctorDetails />} />
+        <Route path='/patients' exact element={<AllReceivers />} />
+        <Route path='/patients/:id' exact element={<ReceiverDetail />} />
+        <Route path='/donors' exact element={<AllDonors />} />
+        <Route path='/donors/:id' exact element={<DonorDetails />} />
+      </Routes>
+    </>
 
 
   );

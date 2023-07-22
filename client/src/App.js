@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/Home';
@@ -9,6 +9,7 @@ import AllDonors from './components/allDonors/AllDonors'
 import DonorDetails from './components/allDonors/DonorDetail'
 import AllReceivers from './components/allReceivers/AllReceivers'
 import ReceiverDetail from './components/allReceivers/ReceiverDetail'
+import { ContractProvider } from './context/ContractProvider';
 
 
 function App() {
@@ -17,20 +18,29 @@ function App() {
   const ReceiversRef = useRef(null)
   const DoctorRef = useRef(null)
 
+  useEffect(() => {
+    console.log("hiiii");
+  })
   return (
-    <BrowserRouter>
-      <Navbar ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />
-      <div className="h-full w-full ">
-        <Routes>
-          <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
-          <Route path='/allDoctors' exact element={<AllDoctors />} />
-          <Route path='/allPatients' exact element={<AllReceivers />} />
-          <Route path='/allDonors' exact element={<AllDonors />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+
+
+
+    <Routes>
+      <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
+      <Route path='/doctors' exact element={<AllDoctors />} />
+      <Route path='/doctors/:id' exact element={<DoctorDetails />} />
+      <Route path='/patients' exact element={<AllReceivers />} />
+      <Route path='/patients/:id' exact element={<ReceiverDetail />} />
+      <Route path='/donors' exact element={<AllDonors />} />
+      <Route path='/donors/:id' exact element={<DonorDetails />} />
+    </Routes>
+
 
   );
 }
 
 export default App;
+
+{/* <Navbar ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />
+        <div className="h-full w-full "> */}
+{/* </div> */ }

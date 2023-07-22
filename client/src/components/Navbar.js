@@ -39,10 +39,10 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
             <nav className='fixed top-0 z-20 bg-slate-400 bg-opacity-50 w-full backdrop-filter backdrop-blur-2xl'>
                 <div className='md:flex hidden justify-between font-dmSans p-4 items-center'>
                     <ul className='float-left flex space-x-4 text-white'>
-                        <li className='text-mainGreen'>logo</li>
-                        <li className='' onClick={clickAbout}>About</li>
-                        <li onClick={clickPatients}>Patients</li>
-                        <li onClick={clickDoctors}>Doctors</li>
+                        <li className='text-mainGreen cursor-pointer'>logo</li>
+                        <li className='cursor-pointer' onClick={clickAbout}>About</li>
+                        <li className='cursor-pointer' onClick={clickPatients}>Patients</li>
+                        <li className='cursor-pointer' onClick={clickDoctors}>Doctors</li>
                     </ul>
                     <div className='flex space-x-3 items-center'>
                         {

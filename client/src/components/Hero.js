@@ -13,9 +13,9 @@ const Hero = () => {
         }
     }
 
-    const handleReceive = () => { }
+    // const handleReceive = () => { }
     return (
-        <section className=' w-full h-fit flex bg-slate-500'>
+        <section className=' w-full h-[100vh] overflow-hidden flex bg-slate-500'>
             <div className='w-full bg-black'>
                 <img src={landingPageBanner} className='-z-10 opacity-50' alt='banner_image' />
             </div>

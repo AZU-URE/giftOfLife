@@ -1,19 +1,19 @@
+import { useRef } from 'react';
+import { Routes, Route } from 'react-router-dom'
+
+// import Navbar from './components/Navbar'
+import Home from './pages/Home';
+import AllDoctors from './pages/AllDoctors'
+import DoctorDetails from './pages/DoctorDetails'
+import AllReceivers from './pages/AllReceivers'
+import ReceiverDetail from './pages/ReceiverDetail'
+import Register from './pages/Register';
+
 import './App.css';
-import { useEffect, useRef } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './components/Home';
-import AllDoctors from './components/allDoctors/AllDoctors'
-import DoctorDetails from './components/allDoctors/DoctorDetails'
-import AllDonors from './components/allDonors/AllDonors'
-import DonorDetails from './components/allDonors/DonorDetail'
-import AllReceivers from './components/allReceivers/AllReceivers'
-import ReceiverDetail from './components/allReceivers/ReceiverDetail'
-import Register from './components/Register';
+import Navbar from './components/Navbar';
 
 
 function App() {
-
   const aboutRef = useRef(null)
   const ReceiversRef = useRef(null)
   const DoctorRef = useRef(null)
@@ -41,7 +41,3 @@ function App() {
 }
 
 export default App;
-
-{/* <Navbar ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />
-        <div className="h-full w-full "> */}
-{/* </div> */ }

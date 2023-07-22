@@ -9,7 +9,7 @@ import AllDonors from './components/allDonors/AllDonors'
 import DonorDetails from './components/allDonors/DonorDetail'
 import AllReceivers from './components/allReceivers/AllReceivers'
 import ReceiverDetail from './components/allReceivers/ReceiverDetail'
-import { ContractProvider } from './context/ContractProvider';
+import Register from './components/Register';
 
 
 function App() {
@@ -18,15 +18,14 @@ function App() {
   const ReceiversRef = useRef(null)
   const DoctorRef = useRef(null)
 
-  useEffect(() => {
-    console.log("hiiii");
-  })
+  // useEffect(() => {
+  //   console.log("hiiii");
+  // })
   return (
-
-
 
     <Routes>
       <Route path='/' exact element={<Home ReceiversRef={ReceiversRef} aboutRef={aboutRef} DoctorRef={DoctorRef} />} />
+      <Route path='/register' exact element={<Register />} />
       <Route path='/doctors' exact element={<AllDoctors />} />
       <Route path='/doctors/:id' exact element={<DoctorDetails />} />
       <Route path='/patients' exact element={<AllReceivers />} />

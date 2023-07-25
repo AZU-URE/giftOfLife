@@ -6,12 +6,14 @@ const ethers = require("ethers");
 export async function connect() {
 
     // const { setAccount, account } = useConnect()
+    const contractAddress = "0x03f556506bc15d9D8d4DD3523b2049876329d518"
+
 
     if (window.ethereum) {
         await window.ethereum.request({ method: 'eth_requestAccounts' })
         const provider = new ethers.BrowserProvider(window.ethereum)
         const signer = await provider.getSigner()
-        const contract = new ethers.Contract(process.env.REACT_APP_CONTRACT_ADDRESS, DonationAbi, signer)
+        const contract = new ethers.Contract(contractAddress, DonationAbi, signer)
         // const address = await signer.getAddress()
         // console.log(signer?.address);
         return ({ provider, contract, signer })

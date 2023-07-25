@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 
 const Doctors = ({ DoctorRef }) => {
-	const navigate = useNavigate();
-	const viewAllDoctors = () => {
-		navigate('/doctors')
-	}
+    const navigate = useNavigate();
+    const viewAllDoctors = () => {
+        navigate('/doctors')
+    }
     return (
         <section ref={DoctorRef} id="Doctors" className='p-10 px-24 pt-20 bg-teal-50/70'>
             <p className='w-full text-center text-4xl font-dmSans font-medium mb-16'><span className='text-mainGreen'>Our</span>  Doctors</p>

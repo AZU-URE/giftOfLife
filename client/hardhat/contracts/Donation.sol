@@ -84,6 +84,28 @@ contract Donation {
         _;
     }
 
+    modifier registerOnce(address _account, UserType _userType) {
+        bool registered = false;
+        if (_userType == UserType.Donor) {
+            for (uint i = 0; i < donors.length; i++) {
+                if (donors[i].account == _account) {
+                    registered = true;
+                    break;
+                }
+            }
+        } else {
+            for (uint i = 0; i < receivers.length; i++) {
+                if (receivers[i].account == _account) {
+                    registered = true;
+                    break;
+                }
+            }
+        }
+
+        require(!registered, "You have already registered");
+        _;
+    }
+
     // -----------------events-------------------
 
     event MatchFound(Matched indexed _matched, string indexed msg);
@@ -107,7 +129,7 @@ contract Donation {
         Organ _organ,
         BloodGroup _bloodGroup,
         UserType _userType
-    ) public returns (bool) {
+    ) public registerOnce(_account, _userType) returns (bool) {
         User memory user = User(
             _account,
             _name,

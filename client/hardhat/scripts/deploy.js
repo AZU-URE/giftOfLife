@@ -5,6 +5,7 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+// const extractContentInSingleQuotes = require('../../src/utils/messageInsideQuotes')
 
 function logDonors(donors) {
   // console.log('reched in donors');
@@ -46,51 +47,82 @@ async function main() {
 
   const [donor1, donor2, receiver1, receiver2, doctor1, doctor2] = await hre.ethers.getSigners()
 
-  const tx = await contract.connect(donor1).setUser(donor1.address, "donor1", 1, 1, 0);
-  // await contract.connect(donor2).setUser(donor2.address, "donor2", 2, 2, 0);
-  // await contract.connect(receiver1).setUser(receiver1.address, "receiver1", 1, 1, 1);
-  // await contract.connect(receiver1).setUser(receiver2.address, "receiver2", 2, 1, 1);
-  // await contract.connect(doctor1).setDoctor(doctor1.address, "doctor1", "license")
-  // await contract.connect(doctor1).setDoctor(doctor2.address, "doctor2", "license")
-  console.log(tx.hash);
-  // const donors = await contract.getDonors();
-  // console.log("---------donors-----------");
-  // console.log(donors);
-  // logDonors(donors);
+  const donor = await contract.getDonors()
+  console.log(donor);
 
-  // const receivers = await contract.getReceivers();
-  // logReceivers(receivers);
+  await contract.connect(donor1).setUser(donor1.address, "donor1", 1, 1, 0);
 
-  // const doctors = await contract.getDoctors();
-  // logDoctors(doctors);
-  // const donor = await contract.donors(0)
-  // console.log();
+  try {
+    const tx = await contract.connect(donor2).setUser(donor1.address, "donor2", 1, 1, 0)
+    const receipt = await tx.wait();
+    console.log('Transaction successful:');
+  } catch (error) {
+    // Transaction failed, handle the revert error
+    if (error.message.includes("revert")) {
+      const revertReason = error.message.replace("revert ", "");
+      const regex = /'([^']*)'/;
+      const matches = revertReason.match(regex);
+      if (matches && matches.length >= 2) {
+        console.log(matches[matches.length - 1]);
+      } else {
+        console.log("error"); // No content in single quotes found
 
-  // const requiredDonor = [
-  //   donors[1].account,
-  //   donors[1].name,
-  //   donors[1].received,
-  //   donors[1].donated,
-  //   donors[1].verified,
-  //   donors[1].organ,
-  //   donors[1].bloodGroup,
-  //   donors[1].userType
-  // ];
-
-  // handle revert error in frontend 
-  // for checking we can use chai
-  // await contract.connect(doctor1).verify(requiredDonor)
-  // const verifiedDonors = await contract.getVerifiedDoners();
-  // console.log("verified Donors: ");
-  // logDonors(verifiedDonors);
+        // revertReason = extractContentInSingleQuotes(revertReason)
+        //     console.log('Revert reason:', revertReason);
+        //   } else {
+        //     // Handle other errors
+        //     console.error('Error:', error);
+      }
+    }
+    // } finally {
+    // await contract.connect(doctor1).setDoctor(doctor1.address, "doctor1", "license")
+    // const donors = await contract.getDonors();
 
 
 
-}
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+    // await contract.connect(receiver1).setUser(receiver1.address, "receiver1", 1, 1, 1);
+    // await contract.connect(receiver1).setUser(receiver2.address, "receiver2", 2, 1, 1);
+    // await contract.connect(doctor1).setDoctor(doctor2.address, "doctor2", "license")
+    // console.log(tx.hash);
+    // console.log("---------donors-----------");
+    // console.log(donors);
+    // logDonors(donors);
+
+    // const receivers = await contract.getReceivers();
+    // logReceivers(receivers);
+
+    // const doctors = await contract.getDoctors();
+    // logDoctors(doctors);
+    // const donor = await contract.donors(0)
+    // console.log();
+
+    // const requiredDonor = [
+    //   donors[0].account,
+    //   donors[0].name,
+    //   donors[0].received,
+    //   donors[0].donated,
+    //   donors[0].verified,
+    //   donors[0].organ,
+    //   donors[0].bloodGroup,
+    //   donors[0].userType
+    // ];
+
+    // handle revert error in frontend 
+    // for checking we can use chai
+    // await contract.connect(doctor1).verify(requiredDonor)
+    // const verifiedDonors = await contract.getVerifiedDoners();
+    // console.log("verified Donors: ");
+    // logDonors(verifiedDonors);
+
+
+  }
+
+  // }
+
+  // We recommend this pattern to be able to use async/await everywhere
+  // and properly handle errors.
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });

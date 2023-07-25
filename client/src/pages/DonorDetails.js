@@ -1,11 +1,12 @@
 import React from 'react'
 import Profile from '../components/Profile'
-const DoctorDetails = () => {
+
+const DonorDetails = () => {
     return (
         <div>
-            <Profile userType='doctors' />
+            <Profile userType='donor' />
         </div>
     )
 }
 
-export default DoctorDetails
+export default DonorDetails

@@ -19,8 +19,8 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
 
     const handleConnect = async () => {
         try {
-            const { contract, provider, signer } = await connect()
-            setAccount({ contract, provider, signer })
+            const { provider, contract, signer } = await connect()
+            setAccount({ provider, contract, signer })
             setContract(contract)
         }
         catch (e) {
@@ -29,7 +29,7 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
     }
 
     useEffect(() => {
-        // console.log(account?.signer?.address);
+        console.log(account?.signer?.address);
         setAddress(account?.signer?.address);
     }, [account])
 

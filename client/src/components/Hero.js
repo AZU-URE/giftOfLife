@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import landingPageBanner from '../assets/landingPage/mainBanner2.jpg'
 import useConnect from '../hook/useConnect'
 import { useNavigate } from 'react-router-dom'
@@ -7,43 +7,18 @@ const Hero = () => {
     const { account, contract } = useConnect()
     const navigate = useNavigate()
     const [message, setMessage] = useState('')
-    // const [address, setAddress] = useState(null)
-
-    // const handleDonate = () => {
-    //     if (account?.signer) {
-    //         navigate('/register/donor')
-    //     } else {
-    //         setMessage("Your metamask is not connected")
-    //         setTimeout(() => {
-    //             setMessage('')
-    //         }, 3000)
-    //     }
-    // }
-
-    // const handleReceive = () => {
-    //     if (account?.signer) {
-    //         navigate('/register/receiver')
-    //     }
-    // }
-
-    // if registered ni h to inpr bhejna otherwise profile page pr
-
-    // const handleDoc = () => {
-    //     if (account?.signer) {
-    //         navigate('/register/doc')
-    //     }
-    // }
 
     const handleClick = async (e) => {
         const address = account?.signer?.address
         if (account?.signer) {
             if (e.target.id === 'donor') {
+                console.log("hii");
                 const donors = await contract.getDonors()
                 const found = donors.filter((user) => {
-                    return user[0] == address
+                    return user[0] === address
                 })
                 // console.log(found);
-                if (found.length != 0) {
+                if (found.length !== 0) {
                     navigate(`/donors/${address}`)
                 } else {
                     navigate('/register/donor')
@@ -52,10 +27,10 @@ const Hero = () => {
                 console.log("receiver");
                 const receivers = await contract.getReceivers()
                 const found = receivers.filter((user) => {
-                    return user[0] == address
+                    return user[0] === address
                 })
                 // console.log(found);
-                if (found.length != 0) {
+                if (found.length !== 0) {
                     navigate(`/patients/${address}`)
                 } else {
                     navigate('/register/receiver')
@@ -64,10 +39,10 @@ const Hero = () => {
                 console.log("doc");
                 const docs = await contract.getDoctors()
                 const found = docs.filter((user) => {
-                    return user[0] == address
+                    return user[0] === address
                 })
                 // console.log(found);
-                if (found.length != 0) {
+                if (found.length !== 0) {
                     navigate(`/doctors/${address}`)
                 } else {
                     navigate('/register/doctor')
@@ -92,7 +67,7 @@ const Hero = () => {
             <div className='w-full absolute m-auto top-64 flex flex-col items-center'>
                 <p className='text-7xl text-mainGreen font-dmSans font-bold'>Happiness <span className='text-white'>comes from</span> </p>
                 <p className='text-7xl text-mainGreen font-dmSans font-bold'><span className='text-white'>your</span>  action.</p>
-                <p className='text-base text-white font-dmSans font-light mt-8'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi nihil tempora ad sint fugit dolores aliquid corrupti</p>
+                <p className='text-base text-white font-dmSans font-light mt-8'>Donate and track your Organs and organ doners here</p>
                 <div className="flex space-x-5">
                     <button id='donor' onClick={(event) => { handleClick(event) }} className='bg-mainGreen rounded-full hover:bg-mainGreen/80 text-white p-3 px-6 mt-8 font-medium text-lg border-white border-[1px]'>Donate</button>
                     <button id='receiver' onClick={(event) => { handleClick(event) }} className='bg-transparent hover:bg-mainGreen/80 rounded-full hover:text-white border-[2px] border-mainGreen text-mainGreen p-3 px-6 mt-8 font-medium text-lg'>Receive</button>

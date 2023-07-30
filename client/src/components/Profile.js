@@ -25,7 +25,7 @@ const Profile = ({ userType }) => {
 
             // const temp = await users.filter((user) => { return user[0] === address })
             // console.log(temp[0]);
-            setUser(users.find((user) => { return user[0] == address }))
+            setUser(users.find((user) => { return user[0] === address }))
             // setUser(users)
         }
         // console.log(address);
@@ -38,23 +38,27 @@ const Profile = ({ userType }) => {
 
     const handleDonote = () => {
         if (userType === 'donor') {
+            setMessage(" ")
             console.log("clicked");
         } else {
             setMessage("You can't donate")
         }
     }
     const handleMatch = () => {
-        if (userType === 'patients' || userType === 'doner') {
+        if (userType === 'donor' || userType === 'patients') {
+            setMessage(" ")
             console.log("clicked");
 
         } else {
             setMessage("You can't find the match")
         }
     }
-    const handleVerify = () => {
+    const handleVerify = async () => {
         if (userType === 'doctors') {
-            console.log("clicked");
-
+            setMessage(" ")
+            // const tx = await contract.verify(user)
+            // tx.wait(1)
+            // setMessage("")
         } else {
             setMessage("You can't verify, you are not a doctor")
         }

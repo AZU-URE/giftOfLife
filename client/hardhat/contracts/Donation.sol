@@ -191,8 +191,20 @@ contract Donation {
         whoVerified[_user.account] = msg.sender;
         if (_user.userType == UserType.Donor) {
             donersVerified.push(_user);
+            for (uint i = 0; i < donors.length; i++) {
+                if (donors[i].account == _user.account) {
+                    donors[i] = donors[donors.length -1];
+                    donors.pop();
+                }
+            }
         } else {
             receiversVerified.push(_user);
+            for (uint i = 0; i < receivers.length; i++) {
+                if (receivers[i].account == _user.account) {
+                    receivers[i] = receivers[receivers.length-1];
+                    receivers.pop();
+                }
+            }
         }
     }
 
@@ -268,11 +280,12 @@ contract Donation {
     }
 
     // donate
-    function donate(User memory _user) public returns (bool) {
+    function donate(User memory _user) public onlyVerfied(_user) returns (bool) {
         require(
             _user.received != true,
             "Already received, let us give chnc to others"
         );
+
         address donor = msg.sender;
         address receiver = _user.account;
         bool matchVerified = false;
@@ -284,7 +297,7 @@ contract Donation {
             ) {
                 matchVerified = true;
                 matchedProfiles[i].donor.donated = true;
-                matchedProfiles[i].receiver.verified = true;
+                matchedProfiles[i].receiver.received = true;
                 emit OrganReceived(donor, receiver, "Received");
                 break;
             }

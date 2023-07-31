@@ -39,6 +39,13 @@ function logDoctors(doctors) {
 
 
 async function main() {
+
+  const contractFactoryFirst = await hre.ethers.getContractFactory("Definitions")
+  const contractFirst = await contractFactoryFirst.deploy()
+  console.log("waiting for deployment");
+  contractFirst.waitForDeployment()
+  console.log(`The address of contract Definitions is: ${contractFirst.target}`);
+
   const contractFactory = await hre.ethers.getContractFactory("Donation")
   const contract = await contractFactory.deploy()
   console.log("waiting for deployment");

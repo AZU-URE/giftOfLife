@@ -1,7 +1,7 @@
 const hre = require("hardhat")
 
 async function main() {
-    const contractFactory = await hre.ethers.getContractFactory("Donation")
+    const contractFactory = await hre.ethers.getContractFactory("Definitions")
     const contract = await contractFactory.deploy()
     console.log("waiting for deployment");
     contract.waitForDeployment()

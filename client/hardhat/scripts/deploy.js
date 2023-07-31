@@ -40,13 +40,19 @@ function logDoctors(doctors) {
 
 async function main() {
 
-  const contractFactoryFirst = await hre.ethers.getContractFactory("Definitions")
+  const contractFactoryFirst = await hre.ethers.getContractFactory("Enums")
   const contractFirst = await contractFactoryFirst.deploy()
   console.log("waiting for deployment");
   contractFirst.waitForDeployment()
   console.log(`The address of contract Definitions is: ${contractFirst.target}`);
 
-  const contractFactory = await hre.ethers.getContractFactory("Donation")
+  const contractFactoryStruct = await hre.ethers.getContractFactory("Structs")
+  const contractStruct = await contractFactoryStruct.deploy()
+  console.log("waiting for deployment");
+  contractFirst.waitForDeployment()
+  console.log(`The address of contract Definitions is: ${contractStruct.target}`);
+
+  const contractFactory = await hre.ethers.getContractFactory("DonationCompact")
   const contract = await contractFactory.deploy()
   console.log("waiting for deployment");
   contract.waitForDeployment()

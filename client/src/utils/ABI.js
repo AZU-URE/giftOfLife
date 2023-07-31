@@ -32,22 +32,22 @@ const DonationAbi = [
                                 "type": "bool"
                             },
                             {
-                                "internalType": "enum Donation.Organ",
+                                "internalType": "enum Enums.Organ",
                                 "name": "organ",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.BloodGroup",
+                                "internalType": "enum Enums.BloodGroup",
                                 "name": "bloodGroup",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.UserType",
+                                "internalType": "enum Enums.UserType",
                                 "name": "userType",
                                 "type": "uint8"
                             }
                         ],
-                        "internalType": "struct Donation.User",
+                        "internalType": "struct Structs.User",
                         "name": "donor",
                         "type": "tuple"
                     },
@@ -79,28 +79,28 @@ const DonationAbi = [
                                 "type": "bool"
                             },
                             {
-                                "internalType": "enum Donation.Organ",
+                                "internalType": "enum Enums.Organ",
                                 "name": "organ",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.BloodGroup",
+                                "internalType": "enum Enums.BloodGroup",
                                 "name": "bloodGroup",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.UserType",
+                                "internalType": "enum Enums.UserType",
                                 "name": "userType",
                                 "type": "uint8"
                             }
                         ],
-                        "internalType": "struct Donation.User",
+                        "internalType": "struct Structs.User",
                         "name": "receiver",
                         "type": "tuple"
                     }
                 ],
                 "indexed": true,
-                "internalType": "struct Donation.Matched",
+                "internalType": "struct Structs.Matched",
                 "name": "_matched",
                 "type": "tuple"
             },
@@ -211,22 +211,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User",
+                "internalType": "struct Structs.User",
                 "name": "_user",
                 "type": "tuple"
             }
@@ -269,60 +269,6 @@ const DonationAbi = [
                 "type": "uint256"
             }
         ],
-        "name": "donersVerified",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "bool",
-                "name": "received",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "donated",
-                "type": "bool"
-            },
-            {
-                "internalType": "bool",
-                "name": "verified",
-                "type": "bool"
-            },
-            {
-                "internalType": "enum Donation.Organ",
-                "name": "organ",
-                "type": "uint8"
-            },
-            {
-                "internalType": "enum Donation.BloodGroup",
-                "name": "bloodGroup",
-                "type": "uint8"
-            },
-            {
-                "internalType": "enum Donation.UserType",
-                "name": "userType",
-                "type": "uint8"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
         "name": "donors",
         "outputs": [
             {
@@ -351,17 +297,71 @@ const DonationAbi = [
                 "type": "bool"
             },
             {
-                "internalType": "enum Donation.Organ",
+                "internalType": "enum Enums.Organ",
                 "name": "organ",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.BloodGroup",
+                "internalType": "enum Enums.BloodGroup",
                 "name": "bloodGroup",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.UserType",
+                "internalType": "enum Enums.UserType",
+                "name": "userType",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "donorsVerified",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "received",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "donated",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "verified",
+                "type": "bool"
+            },
+            {
+                "internalType": "enum Enums.Organ",
+                "name": "organ",
+                "type": "uint8"
+            },
+            {
+                "internalType": "enum Enums.BloodGroup",
+                "name": "bloodGroup",
+                "type": "uint8"
+            },
+            {
+                "internalType": "enum Enums.UserType",
                 "name": "userType",
                 "type": "uint8"
             }
@@ -391,7 +391,7 @@ const DonationAbi = [
                         "type": "string"
                     }
                 ],
-                "internalType": "struct Donation.Doctor[]",
+                "internalType": "struct Structs.Doctor[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -431,22 +431,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User[]",
+                "internalType": "struct Structs.User[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -484,22 +484,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User",
+                "internalType": "struct Structs.User",
                 "name": "_user",
                 "type": "tuple"
             }
@@ -534,22 +534,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User[]",
+                "internalType": "struct Structs.User[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -591,22 +591,22 @@ const DonationAbi = [
                                 "type": "bool"
                             },
                             {
-                                "internalType": "enum Donation.Organ",
+                                "internalType": "enum Enums.Organ",
                                 "name": "organ",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.BloodGroup",
+                                "internalType": "enum Enums.BloodGroup",
                                 "name": "bloodGroup",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.UserType",
+                                "internalType": "enum Enums.UserType",
                                 "name": "userType",
                                 "type": "uint8"
                             }
                         ],
-                        "internalType": "struct Donation.User",
+                        "internalType": "struct Structs.User",
                         "name": "donor",
                         "type": "tuple"
                     },
@@ -638,27 +638,27 @@ const DonationAbi = [
                                 "type": "bool"
                             },
                             {
-                                "internalType": "enum Donation.Organ",
+                                "internalType": "enum Enums.Organ",
                                 "name": "organ",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.BloodGroup",
+                                "internalType": "enum Enums.BloodGroup",
                                 "name": "bloodGroup",
                                 "type": "uint8"
                             },
                             {
-                                "internalType": "enum Donation.UserType",
+                                "internalType": "enum Enums.UserType",
                                 "name": "userType",
                                 "type": "uint8"
                             }
                         ],
-                        "internalType": "struct Donation.User",
+                        "internalType": "struct Structs.User",
                         "name": "receiver",
                         "type": "tuple"
                     }
                 ],
-                "internalType": "struct Donation.Matched[]",
+                "internalType": "struct Structs.Matched[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -698,22 +698,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User[]",
+                "internalType": "struct Structs.User[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -753,22 +753,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User[]",
+                "internalType": "struct Structs.User[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -808,22 +808,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User[]",
+                "internalType": "struct Structs.User[]",
                 "name": "",
                 "type": "tuple[]"
             }
@@ -869,22 +869,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User",
+                "internalType": "struct Structs.User",
                 "name": "donor",
                 "type": "tuple"
             },
@@ -916,27 +916,82 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User",
+                "internalType": "struct Structs.User",
                 "name": "receiver",
                 "type": "tuple"
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "account",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "received",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "donated",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "verified",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "enum Enums.Organ",
+                        "name": "organ",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "enum Enums.BloodGroup",
+                        "name": "bloodGroup",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "enum Enums.UserType",
+                        "name": "userType",
+                        "type": "uint8"
+                    }
+                ],
+                "internalType": "struct Structs.User",
+                "name": "_user",
+                "type": "tuple"
+            }
+        ],
+        "name": "pair",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -975,17 +1030,17 @@ const DonationAbi = [
                 "type": "bool"
             },
             {
-                "internalType": "enum Donation.Organ",
+                "internalType": "enum Enums.Organ",
                 "name": "organ",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.BloodGroup",
+                "internalType": "enum Enums.BloodGroup",
                 "name": "bloodGroup",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.UserType",
+                "internalType": "enum Enums.UserType",
                 "name": "userType",
                 "type": "uint8"
             }
@@ -1029,17 +1084,17 @@ const DonationAbi = [
                 "type": "bool"
             },
             {
-                "internalType": "enum Donation.Organ",
+                "internalType": "enum Enums.Organ",
                 "name": "organ",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.BloodGroup",
+                "internalType": "enum Enums.BloodGroup",
                 "name": "bloodGroup",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.UserType",
+                "internalType": "enum Enums.UserType",
                 "name": "userType",
                 "type": "uint8"
             }
@@ -1089,17 +1144,17 @@ const DonationAbi = [
                 "type": "string"
             },
             {
-                "internalType": "enum Donation.Organ",
+                "internalType": "enum Enums.Organ",
                 "name": "_organ",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.BloodGroup",
+                "internalType": "enum Enums.BloodGroup",
                 "name": "_bloodGroup",
                 "type": "uint8"
             },
             {
-                "internalType": "enum Donation.UserType",
+                "internalType": "enum Enums.UserType",
                 "name": "_userType",
                 "type": "uint8"
             }
@@ -1145,22 +1200,22 @@ const DonationAbi = [
                         "type": "bool"
                     },
                     {
-                        "internalType": "enum Donation.Organ",
+                        "internalType": "enum Enums.Organ",
                         "name": "organ",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.BloodGroup",
+                        "internalType": "enum Enums.BloodGroup",
                         "name": "bloodGroup",
                         "type": "uint8"
                     },
                     {
-                        "internalType": "enum Donation.UserType",
+                        "internalType": "enum Enums.UserType",
                         "name": "userType",
                         "type": "uint8"
                     }
                 ],
-                "internalType": "struct Donation.User",
+                "internalType": "struct Structs.User",
                 "name": "_user",
                 "type": "tuple"
             }

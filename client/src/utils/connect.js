@@ -6,7 +6,7 @@ const ethers = require("ethers");
 export async function connect() {
 
     // const { setAccount, account } = useConnect()
-    const contractAddress = "0x03f556506bc15d9D8d4DD3523b2049876329d518"
+    const contractAddress = "0xfB4Be9a4C6C930B82df70cD0D0033A50301C7C13"
 
 
     if (window.ethereum) {

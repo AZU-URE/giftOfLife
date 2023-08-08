@@ -17,6 +17,7 @@ const Donate = () => {
             console.log(`tx hash is : ${tx.hash}`);
             setMessage("You are succesfully registered, Go back and click on same btn after txn is successful")
         } catch (error) {
+            console.log(error);
             if (error.message.includes("You have already registered")) {
                 setMessage("You have already registered");
             } else {
@@ -42,7 +43,7 @@ const Donate = () => {
                 <div className='flex space-x-8 items-center justify-between'>
                     <p className='text-lg font-dmSans text-mainGreen font-bold'>User Type</p>
                     <div className='flex space-x-2'>
-                        <label htmlFor='donor'>Donate </label>
+                        <label htmlFor='donor'>Doner </label>
                         <input type='radio' name='type' id='donor' value={0} {...register('userType')} required />
                         <label htmlFor='receiver'>Patient </label>
                         <input type='radio' name='type' id='receiver' value={1} {...register('userType')} required />

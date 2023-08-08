@@ -3,109 +3,7 @@ const DonationAbi = [
         "anonymous": false,
         "inputs": [
             {
-                "components": [
-                    {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "account",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "name",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "received",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "donated",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "verified",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "enum Enums.Organ",
-                                "name": "organ",
-                                "type": "uint8"
-                            },
-                            {
-                                "internalType": "enum Enums.BloodGroup",
-                                "name": "bloodGroup",
-                                "type": "uint8"
-                            },
-                            {
-                                "internalType": "enum Enums.UserType",
-                                "name": "userType",
-                                "type": "uint8"
-                            }
-                        ],
-                        "internalType": "struct Structs.User",
-                        "name": "donor",
-                        "type": "tuple"
-                    },
-                    {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "account",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "name",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "received",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "donated",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "bool",
-                                "name": "verified",
-                                "type": "bool"
-                            },
-                            {
-                                "internalType": "enum Enums.Organ",
-                                "name": "organ",
-                                "type": "uint8"
-                            },
-                            {
-                                "internalType": "enum Enums.BloodGroup",
-                                "name": "bloodGroup",
-                                "type": "uint8"
-                            },
-                            {
-                                "internalType": "enum Enums.UserType",
-                                "name": "userType",
-                                "type": "uint8"
-                            }
-                        ],
-                        "internalType": "struct Structs.User",
-                        "name": "receiver",
-                        "type": "tuple"
-                    }
-                ],
-                "indexed": true,
-                "internalType": "struct Structs.Matched",
-                "name": "_matched",
-                "type": "tuple"
-            },
-            {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "msg",
                 "type": "string"
@@ -118,7 +16,7 @@ const DonationAbi = [
         "anonymous": false,
         "inputs": [
             {
-                "indexed": true,
+                "indexed": false,
                 "internalType": "string",
                 "name": "msg",
                 "type": "string"
@@ -151,6 +49,44 @@ const DonationAbi = [
         ],
         "name": "OrganReceived",
         "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "AllDonors",
+        "outputs": [
+            {
+                "internalType": "int256",
+                "name": "",
+                "type": "int256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "AllReceivers",
+        "outputs": [
+            {
+                "internalType": "int256",
+                "name": "",
+                "type": "int256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "inputs": [
@@ -232,13 +168,7 @@ const DonationAbi = [
             }
         ],
         "name": "donate",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
+        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
@@ -452,109 +382,6 @@ const DonationAbi = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "account",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "received",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "donated",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "verified",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "enum Enums.Organ",
-                        "name": "organ",
-                        "type": "uint8"
-                    },
-                    {
-                        "internalType": "enum Enums.BloodGroup",
-                        "name": "bloodGroup",
-                        "type": "uint8"
-                    },
-                    {
-                        "internalType": "enum Enums.UserType",
-                        "name": "userType",
-                        "type": "uint8"
-                    }
-                ],
-                "internalType": "struct Structs.User",
-                "name": "_user",
-                "type": "tuple"
-            }
-        ],
-        "name": "getMatchProfile",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "account",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "received",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "donated",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "verified",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "enum Enums.Organ",
-                        "name": "organ",
-                        "type": "uint8"
-                    },
-                    {
-                        "internalType": "enum Enums.BloodGroup",
-                        "name": "bloodGroup",
-                        "type": "uint8"
-                    },
-                    {
-                        "internalType": "enum Enums.UserType",
-                        "name": "userType",
-                        "type": "uint8"
-                    }
-                ],
-                "internalType": "struct Structs.User[]",
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {

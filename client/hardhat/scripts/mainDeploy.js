@@ -1,7 +1,21 @@
 const hre = require("hardhat")
 
 async function main() {
-    const contractFactory = await hre.ethers.getContractFactory("Definitions")
+
+    const contractFactoryStruct = await hre.ethers.getContractFactory("Structs")
+    const contractStruct = await contractFactoryStruct.deploy()
+    console.log("waiting for deployment");
+    contractStruct.waitForDeployment()
+    console.log(`The address of contract is: ${contractStruct.target}`);
+
+    const contractFactoryEnum = await hre.ethers.getContractFactory("Enums")
+    const contractEnum = await contractFactoryEnum.deploy()
+    console.log("waiting for deployment");
+    contractEnum.waitForDeployment()
+    console.log(`The address of contract is: ${contractEnum.target}`);
+
+
+    const contractFactory = await hre.ethers.getContractFactory("DonationCompact")
     const contract = await contractFactory.deploy()
     console.log("waiting for deployment");
     contract.waitForDeployment()

@@ -13,25 +13,23 @@ const Hero = () => {
         if (account?.signer) {
             if (e.target.id === 'donor') {
                 console.log("hii");
-                const donors = await contract.getDonors()
-                const found = donors.filter((user) => {
-                    return user[0] === address
-                })
-                // console.log(found);
-                if (found.length !== 0) {
-                    navigate(`/donors/${address}`)
+                // const donors = await contract.getDonors()
+                // console.log(donors);
+                // const found = donors.filter((user) => {
+                //     return user[0] === address
+                // })
+                const found = parseInt(await contract.AllDonors(account?.signer?.address))
+                console.log(found);
+                if (found === 1 || found === -1) {
+                    navigate(`/donors/${address}`, { state: { found: found } })
                 } else {
                     navigate('/register/donor')
                 }
             } else if (e.target.id === 'receiver') {
-                console.log("receiver");
-                const receivers = await contract.getReceivers()
-                const found = receivers.filter((user) => {
-                    return user[0] === address
-                })
-                // console.log(found);
-                if (found.length !== 0) {
-                    navigate(`/patients/${address}`)
+                const found = parseInt(await contract.AllReceivers(account?.signer?.address))
+                console.log(found);
+                if (found === 1 || found === -1) {
+                    navigate(`/patients/${address}`, { state: { found: found } })
                 } else {
                     navigate('/register/receiver')
                 }

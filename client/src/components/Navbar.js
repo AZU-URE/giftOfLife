@@ -2,19 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { connect } from '../utils/connect'
 import useConnect from '../hook/useConnect'
 import { BiSolidUser } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
+    const navigate = useNavigate()
     const { setAccount, account, setContract } = useConnect()
     const [address, setAddress] = useState()
 
     const clickAbout = () => {
+        navigate('/');
         aboutRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
     const clickPatients = () => {
+        navigate('/');
         ReceiversRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }
     const clickDoctors = () => {
+        navigate('/');
         DoctorRef.current?.scrollIntoView({ behaviour: 'smooth' })
+    }
+
+    const clickDonations = () => {
+        navigate('/donations');
     }
 
     const handleConnect = async () => {
@@ -43,6 +52,7 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
                         <li className='cursor-pointer' onClick={clickAbout}>About</li>
                         <li className='cursor-pointer' onClick={clickPatients}>Patients</li>
                         <li className='cursor-pointer' onClick={clickDoctors}>Doctors</li>
+                        <li className='cursor-pointer' onClick={clickDonations}>Donations</li>
                     </ul>
                     <div className='flex space-x-3 items-center'>
                         {
@@ -60,9 +70,9 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
                     </div>
                 </div>
                 {/* make hamburger type resonsive navbar */}
-                <div className='md:hidden text-white'>
+                {/* <div className='md:hidden text-white'>
                     hambu
-                </div>
+                </div> */}
             </nav>
         </>
     )

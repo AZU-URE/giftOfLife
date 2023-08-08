@@ -10,7 +10,9 @@ import DoctorDetails from './pages/DoctorDetails'
 import ReceiverDetail from './pages/ReceiverDetails'
 import DonorDetails from './pages/DonorDetails'
 import Register from './pages/Register';
+import Verify from './pages/Verify';
 import Error404 from './pages/Error404';
+import Donations from './pages/Donations';
 
 import './App.css';
 import Navbar from './components/Navbar';
@@ -33,10 +35,12 @@ function App() {
         {/* <Route path='/register/doc' exact element={<Register />} /> */}
         <Route path='/doctors' exact element={<AllDoctors />} />
         <Route path='/doctors/:id' exact element={<DoctorDetails />} />
+        <Route path='/doctors/:id/verify' exact element={<Verify />} />
         <Route path='/patients' exact element={<AllReceivers />} />
         <Route path='/patients/:id' exact element={<ReceiverDetail />} />
         <Route path='/donors' exact element={<AllDonors />} />
         <Route path='/donors/:id' exact element={<DonorDetails />} />
+        <Route path='/donations' exact element={<Donations />} />
         <Route path='/*' exact element={<Error404 />} />
       </Routes>
     </>

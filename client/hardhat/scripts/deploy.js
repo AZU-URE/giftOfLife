@@ -22,8 +22,9 @@ function logReceivers(receivers) {
   for (const receiver of receivers) {
     const name = receiver.name;
     const organ = receiver.organ;
+    const bg = receiver.bloodGroup;
 
-    console.log(`name: ${name} and organ: ${organ}`);
+    console.log(`name: ${name} and organ: ${organ} and bg: ${bg}`);
   }
 }
 
@@ -58,39 +59,46 @@ async function main() {
   contract.waitForDeployment()
   console.log(`The address of contract is: ${contract.target}`);
 
+  // contract.on("MatchFound", (msg1) => {
+  //   console.log(msg1);
+  // })
   const [donor1, donor2, receiver1, receiver2, doctor1, doctor2] = await hre.ethers.getSigners()
 
   // const donor = await contract.getDonors()
   // console.log(donor);
 
   await contract.connect(donor1).setUser(donor1.address, "donor1", 1, 1, 0);
-  await contract.connect(donor2).setUser(donor2.address, "donor2", 1, 1, 0)
+  await contract.connect(donor2).setUser(donor2.address, "donor2", 2, 1, 0);
+  await contract.connect(receiver1).setUser(receiver1.address, "receiver1", 1, 1, 1)
+  await contract.connect(receiver2).setUser(receiver2.address, "receiver2", 1, 1, 1)
 
   // try {
   //   const tx = await contract.connect(donor2).setUser(donor1.address, "donor2", 1, 1, 0)
   //   const receipt = await tx.wait();
   //   console.log('Transaction successful:');
   // } catch (error) {
-  //   // Transaction failed, handle the revert error
-  //   if (error.message.includes("revert")) {
-  //     const revertReason = error.message.replace("revert ", "");
-  //     const regex = /'([^']*)'/;
-  //     const matches = revertReason.match(regex);
-  //     if (matches && matches.length >= 2) {
-  //       console.log(matches[matches.length - 1]);
-  //     } else {
-  //       console.log("error"); // No content in single quotes found
+  // Transaction failed, handle the revert error
+  // if (error.message.includes("revert")) {
+  //   const revertReason = error.message.replace("revert ", "");
+  //   const regex = /'([^']*)'/;
+  //   const matches = revertReason.match(regex);
+  //   if (matches && matches.length >= 2) {
+  //     console.log(matches[matches.length - 1]);
+  //   } else {
+  //     console.log("error"); // No content in single quotes found
 
-  //       // revertReason = extractContentInSingleQuotes(revertReason)
-  //       //     console.log('Revert reason:', revertReason);
-  //       //   } else {
-  //       //     // Handle other errors
-  //       //     console.error('Error:', error);
+  // revertReason = extractContentInSingleQuotes(revertReason)
+  //     console.log('Revert reason:', revertReason);
+  //   } else {
+  //     // Handle other errors
+  //     console.error('Error:', error);
   //     }
   //   }
-  // } finally {
+  // } 
+  // finally {
   // await contract.connect(doctor1).setDoctor(doctor1.address, "doctor1", "license")
   const donors = await contract.getDonors();
+  const receivers = await contract.getReceivers();
   // logDonors(donors);
 
 
@@ -103,6 +111,11 @@ async function main() {
   console.log("---------donors-----------");
   // console.log(donors);
   logDonors(donors);
+  console.log("chekcing whether verified", donors[0].verified);
+
+  console.log("---------receivers-----------");
+  // console.log(donors);
+  logDonors(receivers);
 
   // const receivers = await contract.getReceivers();
   // logReceivers(receivers);
@@ -130,10 +143,84 @@ async function main() {
   const verifiedDonors = await contract.getVerifiedDoners();
   console.log("verified Donors: ");
   logDonors(verifiedDonors);
-  console.log("---------donors-----------");
-  const NonVerifieddonors = await contract.getDonors();
+  console.log(verifiedDonors[0].verified);
+
+  const requiredReceiver = [
+    receivers[0].account,
+    receivers[0].name,
+    receivers[0].received,
+    receivers[0].donated,
+    receivers[0].verified,
+    receivers[0].organ,
+    receivers[0].bloodGroup,
+    receivers[0].userType
+  ]
+
+  const requiredReceiver2 = [
+    receivers[1].account,
+    receivers[1].name,
+    receivers[1].received,
+    receivers[1].donated,
+    receivers[1].verified,
+    receivers[1].organ,
+    receivers[1].bloodGroup,
+    receivers[1].userType
+  ]
+
+  await contract.connect(doctor2).verify(requiredReceiver)
+  await contract.connect(doctor2).verify(requiredReceiver2)
+  const verifiedReceivers = await contract.getVerifiedReceivers();
+  console.log("verified Receivers: ");
+  logReceivers(verifiedReceivers);
+  // console.log(receivers[0].verified);
+
+
+
+  // const verifiedReceiver = [
+  //   verifiedReceivers[0].account,
+  //   verifiedReceivers[0].name,
+  //   verifiedReceivers[0].received,
+  //   verifiedReceivers[0].donated,
+  //   verifiedReceivers[0].verified,
+  //   verifiedReceivers[0].organ,
+  //   verifiedReceivers[0].bloodGroup,
+  //   verifiedReceivers[0].userType
+  // ]
+
+  const tempDonor = [
+    verifiedDonors[0].account,
+    verifiedDonors[0].name,
+    verifiedDonors[0].received,
+    verifiedDonors[0].donated,
+    verifiedDonors[0].verified,
+    verifiedDonors[0].organ,
+    verifiedDonors[0].bloodGroup,
+    verifiedDonors[0].userType
+  ];
+
+  // await contract.pair(tempDonor);
+  // await contract.pair(tempDonor);
+  // await contract.pair(tempDonor);
+  // console.log(profiles);
+  const first = await contract.donate(tempDonor);
+  const second = await contract.donate(tempDonor);
+  const third = await contract.donate(tempDonor);
+  // console.log("first:", first);
+  // console.log("second:", second);
+
+  // await contract.pair(tempDonor);
+  // contract.off()
+  // console.log(matchedProfiles.length);
+  // console.log("---------doctor-----------");
+  // console.log(donors[0].account);
+
+  // console.log("registering again");
+  // await contract.connect(donor1).setUser(donor1.address, "donor1", 1, 1, 0);
+  // const doc = await contract.whoVerified("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266")
+  // console.log(doc);
+  // const NonVerifieddonors = await contract.getDonors();
   // console.log(donors);
-  logDonors(NonVerifieddonors);
+  // logDonors(NonVerifieddonors);
 
 
 }

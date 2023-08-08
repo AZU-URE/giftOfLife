@@ -1,17 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+import "hardhat/console.sol";
 import "./Enums.sol";
 import "./Structs.sol";
 
-contract DonationCompact is Enums, Structs 
-{
+contract DonationCompact is Enums, Structs {
     User[] public receivers;
     User[] public donors;
     Doctor[] public doctors;
 
     //tells the user is verified by whom, user=>doctor
     mapping(address => address) public whoVerified;
+
+    mapping(address => int) public AllDonors; // verified : 1, non-verified: -1
+    mapping(address => int) public AllReceivers; // verified : 1, non-verified: -1
 
     //receiver=>donor
     mapping(address => address) public donations;
@@ -22,14 +25,11 @@ contract DonationCompact is Enums, Structs
 
     //------------ MODIFIERS ------------
 
-    modifier Onlydoctor() 
-    {
+    modifier Onlydoctor() {
         //check is any doctor exists in the 'doctor' array
         bool doctorExists = false;
-        for (uint i = 0; i < doctors.length; i++) 
-        {
-            if (doctors[i].account == msg.sender) 
-            {
+        for (uint i = 0; i < doctors.length; i++) {
+            if (doctors[i].account == msg.sender) {
                 doctorExists = true;
                 break;
             }
@@ -38,33 +38,50 @@ contract DonationCompact is Enums, Structs
         _;
     }
 
-    modifier onlyVerfied(User memory _user) 
-    {
+    modifier onlyVerfied(User memory _user) {
         //only verified user, test if '_user.verified == true'
         require(_user.verified, "You are not yet verified");
         _;
     }
 
-    modifier registerOnce(address _account, UserType _userType) 
-    {
-
+    modifier registerOnce(address _account, UserType _userType) {
         //instead of running 2 loops, each for donors and receivers
         //make an array to store each type in one go
 
         //the loop then runs only once on this compact array and checks accordingly
-        
-        User[] storage users = (_userType == UserType.Donor) ? donors : receivers;
-        for (uint i = 0; i < users.length; i++) {
-            require(users[i].account != _account, "You have already registered");
+
+        // User[] storage users = (_userType == UserType.Donor)
+        //     ? donors
+        //     : receivers;
+        // for (uint i = 0; i < users.length; i++) {
+        //     require(
+        //         users[i].account != _account,
+        //         "You have already registered"
+        //     );
+        // }
+
+        int flag;
+
+        if (_userType == UserType.Donor) {
+            flag = AllDonors[_account];
+        } else {
+            flag = AllReceivers[_account];
         }
+        require(flag == 0, "You have already registered");
         _;
     }
 
     //----------- EVENTS -------------
 
-    event MatchFound(Matched indexed _matched, string indexed msg);
-    event MatchNotFound(string indexed msg);
-    event OrganReceived(address indexed donor, address indexed receiver, string msg);
+    event MatchFound(string msg);
+    event MatchNotFound(string msg);
+    event OrganReceived(
+        address indexed donor,
+        address indexed receiver,
+        string msg
+    );
+
+    // event Trial(User[] user, string msg1);
 
     //----------- FUNCTIONS ----------
 
@@ -74,12 +91,25 @@ contract DonationCompact is Enums, Structs
         Organ _organ,
         BloodGroup _bloodGroup,
         UserType _userType
-    ) public registerOnce(_account, _userType) returns (bool) 
-    {
-        User memory user = User(_account, _name, false, false, false, _organ, _bloodGroup, _userType);
-
+    ) public registerOnce(_account, _userType) returns (bool) {
+        User memory user = User(
+            _account,
+            _name,
+            false,
+            false,
+            false,
+            _organ,
+            _bloodGroup,
+            _userType
+        );
         //just used ternary operators to shorten it
-        (_userType == UserType.Donor) ? donors.push(user) : receivers.push(user);
+        if (_userType == UserType.Donor) {
+            donors.push(user);
+            AllDonors[_account] = -1;
+        } else {
+            receivers.push(user);
+            AllReceivers[_account] = -1;
+        }
         return true;
     }
 
@@ -87,8 +117,7 @@ contract DonationCompact is Enums, Structs
         address _account,
         string memory _name,
         string memory _license
-    ) public returns (bool) 
-    {
+    ) public returns (bool) {
         // avoided creation of another variable to store the 'Doctor' object
         // apparently it makes a difference of 0.28kb according to 'ethereum.org'. LOL
         doctors.push(Doctor(_account, _name, _license));
@@ -119,30 +148,30 @@ contract DonationCompact is Enums, Structs
         return matchedProfiles;
     }
 
-function verify(User memory _user) public Onlydoctor 
-    {
+    function verify(User memory _user) public Onlydoctor {
         _user.verified = true;
         whoVerified[_user.account] = msg.sender;
-
-        if (_user.userType == UserType.Donor) 
-        {
+        if (_user.userType == UserType.Donor) {
+            // donorsVerified.push(_user);
+            AllDonors[_user.account] = 1;
             pushAndDelete(donorsVerified, donors, _user);
-        } 
-        else 
-        {
+        } else {
+            // receiversVerified.push(_user);
+            AllReceivers[_user.account] = 1;
             pushAndDelete(receiversVerified, receivers, _user);
         }
     }
 
-    function pushAndDelete(User[] storage verifiedArray, User[] storage usersArray, User memory user) internal 
-    {
+    function pushAndDelete(
+        User[] storage verifiedArray,
+        User[] storage usersArray,
+        User memory user
+    ) internal {
         // the pushing user to the verified array and popping the user from original 'donors' and 'receivers' array is a common functionality
         // so made it into a separate function
         verifiedArray.push(user);
-        for (uint i = 0; i < usersArray.length; i++) 
-        {
-            if (usersArray[i].account == user.account) 
-            {
+        for (uint i = 0; i < usersArray.length; i++) {
+            if (usersArray[i].account == user.account) {
                 usersArray[i] = usersArray[usersArray.length - 1];
                 usersArray.pop();
                 break;
@@ -150,71 +179,71 @@ function verify(User memory _user) public Onlydoctor
         }
     }
 
-    function pair(User memory _user) public onlyVerfied(_user) 
-    {
+    function pair(User memory _user) public onlyVerfied(_user) {
         bool matchFound = false;
-        User[] storage verifiedUsers = (_user.userType == UserType.Donor) ? receiversVerified : donorsVerified;
+        User[] storage verifiedUsers = (_user.userType == UserType.Donor)
+            ? receiversVerified
+            : donorsVerified;
 
-        for (uint i = 0; i < verifiedUsers.length; i++) 
-        {
-            if (verifiedUsers[i].organ == _user.organ && verifiedUsers[i].bloodGroup == _user.bloodGroup) 
-            {
+        // User[] memory matched = new User[](verifiedUsers.length);
+        // uint j = 0;
+        for (uint i = 0; i < verifiedUsers.length; i++) {
+            if (
+                verifiedUsers[i].organ == _user.organ &&
+                verifiedUsers[i].bloodGroup == _user.bloodGroup
+            ) {
                 //again reduced a variable declaration 'matched'
+                // console.log(verifiedUsers.length);
+                // emit Trial(verifiedUsers[i], "Hiiii");
+                emit MatchFound("Match found");
                 matchedProfiles.push(Matched(_user, verifiedUsers[i]));
-                emit MatchFound(Matched(_user, verifiedUsers[i]), "Match found");
+                // matched[j] = verifiedUsers[i];
+                // console.log(matched[j].name);
+                // j++;
                 matchFound = true;
             }
         }
 
-        if (!matchFound) 
-        {
+        // emit Trial(matched, "Hiiii");
+        // matchedProfiles = matched;
+
+        if (!matchFound) {
             emit MatchNotFound("Match not found");
         }
+
+        // return matched;
     }
 
-    function getMatchProfile(User memory _user) public onlyVerfied(_user) returns (User[] memory) 
-    {
+    function donate(User memory _user) public onlyVerfied(_user) {
         pair(_user);
-        User[] memory _profiles = new User[](matchedProfiles.length);
+        address donor_ad = _user.account;
+        address receiver_ad;
+        bool donationDone = false;
 
         for (uint i = 0; i < matchedProfiles.length; i++) {
-            if (_user.account == matchedProfiles[i].donor.account) {
-                _profiles[i] = matchedProfiles[i].receiver;
-            } else {
-                _profiles[i] = matchedProfiles[i].donor;
+            // console.log(
+            //     "receiver addresses,",
+            //     donations[matchedProfiles[i].receiver.account]
+            // );
+            if (matchedProfiles[i].donor.account == donor_ad) {
+                if (
+                    donations[matchedProfiles[i].receiver.account] == address(0)
+                ) {
+                    console.log("inside the if if");
+                    receiver_ad = matchedProfiles[i].receiver.account;
+                    donations[receiver_ad] = donor_ad;
+                    donationDone = true;
+                    break;
+                }
+                // emit OrganReceived(donor, receiver, "Received");
             }
         }
+        // console.log("donationDone,", donationDone);
+        require(
+            donationDone,
+            "The receiver already received the donation from someone else!! Try again sometime later.."
+        );
 
-        return _profiles;
-    }
-
-    function donate(User memory _user) public onlyVerfied(_user) returns (bool) 
-    {
-        require(!_user.received, "Already received, let us give chance to others");
-        address donor = msg.sender;
-        address receiver = _user.account;
-        bool matchVerified = false;
-
-        for (uint i = 0; i < matchedProfiles.length; i++) 
-        {
-            if (matchedProfiles[i].donor.account == donor && matchedProfiles[i].receiver.account == receiver) 
-            {
-                matchVerified = true;
-                matchedProfiles[i].donor.donated = true;
-                matchedProfiles[i].receiver.received = true;
-                emit OrganReceived(donor, receiver, "Received");
-                break;
-            }
-        }
-
-        if (matchVerified) 
-        {
-            donations[receiver] = donor;
-            return true;
-        } 
-        else 
-        {
-            return false;
-        }
+        console.log("donation done");
     }
 }

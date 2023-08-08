@@ -1,12 +1,11 @@
 // import ethers from 'ethers'
 import { DonationAbi } from './ABI'
-import useConnect from '../hook/useConnect'
 const ethers = require("ethers");
 
 export async function connect() {
 
     // const { setAccount, account } = useConnect()
-    const contractAddress = "0xfB4Be9a4C6C930B82df70cD0D0033A50301C7C13"
+    const contractAddress = "0x8C5eAb60D2fc785f6F13e5750f9De9b7210d3864"
 
 
     if (window.ethereum) {
@@ -14,6 +13,9 @@ export async function connect() {
         const provider = new ethers.BrowserProvider(window.ethereum)
         const signer = await provider.getSigner()
         const contract = new ethers.Contract(contractAddress, DonationAbi, signer)
+        contract.on("MatchFound", (msg) => {
+            console.log(msg);
+        })
         // const address = await signer.getAddress()
         // console.log(signer?.address);
         return ({ provider, contract, signer })

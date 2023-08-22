@@ -6,6 +6,7 @@ To setup the project -
 2. client folder contains all the frontend files and hardhat folder contains all the testing done with the help of hardhat.
 3. after changing current directory to client , npm install is the command you need to hit.
 4. to run the project: npm start.
+
 That's it if you got any good feature in your mind so contact us through https://twitter.com/AZU_URE, maybe we can nmake something good for community together.
 <!-- waiting for deployment
 The address of contract is: 0x8e1fe0936C27A379DBDc9aE9acb83000aD67c8F0

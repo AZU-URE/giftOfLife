@@ -9,6 +9,7 @@ contract DonationCompact is Enums, Structs {
     User[] public receivers;
     User[] public donors;
     Doctor[] public doctors;
+    Details[] public donationDetails;
 
     //tells the user is verified by whom, user=>doctor
     mapping(address => address) public whoVerified;
@@ -148,6 +149,10 @@ contract DonationCompact is Enums, Structs {
         return matchedProfiles;
     }
 
+    function getDonationDetails() external view returns (Details[] memory) {
+        return donationDetails;
+    }
+
     function verify(User memory _user) public Onlydoctor {
         _user.verified = true;
         whoVerified[_user.account] = msg.sender;
@@ -232,6 +237,13 @@ contract DonationCompact is Enums, Structs {
                     console.log("inside the if if");
                     receiver_ad = matchedProfiles[i].receiver.account;
                     donations[receiver_ad] = donor_ad;
+                    donationDetails.push(
+                        Details(
+                            receiver_ad,
+                            donor_ad,
+                            matchedProfiles[i].receiver.organ
+                        )
+                    );
                     donationDone = true;
                     break;
                 }

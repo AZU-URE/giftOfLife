@@ -175,6 +175,35 @@ const DonationAbi = [
     {
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "donationDetails",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "receiver",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "doner",
+                "type": "address"
+            },
+            {
+                "internalType": "enum Enums.Organ",
+                "name": "organ",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "address",
                 "name": "",
                 "type": "address"
@@ -322,6 +351,36 @@ const DonationAbi = [
                     }
                 ],
                 "internalType": "struct Structs.Doctor[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDonationDetails",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "receiver",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "doner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "enum Enums.Organ",
+                        "name": "organ",
+                        "type": "uint8"
+                    }
+                ],
+                "internalType": "struct Structs.Details[]",
                 "name": "",
                 "type": "tuple[]"
             }

@@ -204,7 +204,10 @@ async function main() {
   // console.log(profiles);
   const first = await contract.donate(tempDonor);
   const second = await contract.donate(tempDonor);
-  const third = await contract.donate(tempDonor);
+  // const third = await contract.donate(tempDonor);
+
+  const donations = await contract.getDonationDetails();
+  console.log(donations);
   // console.log("first:", first);
   // console.log("second:", second);
 
@@ -224,14 +227,7 @@ async function main() {
 
   //match profiles--------------------------------------
   // Calling the getDonors function to fetch all donors
-  const donors = await contract.getDonors();
 
-  // Looping through all donors and call getMatchProfile for each donor
-  for (const donor of donors) {
-    const donorProfile = await contract.getMatchProfile(donor.account);
-    console.log(`Matched profiles for donor ${donor.name}:`);
-    logDonors(donorProfile);
-  }
 
 }
 

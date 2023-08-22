@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 import "./Enums.sol";
-contract Structs
-{
-// info of the receiver -patient
+
+contract Structs {
+    // info of the receiver -patient
     struct User {
         address account;
         string name;
@@ -26,5 +26,11 @@ contract Structs
     struct Matched {
         User donor;
         User receiver;
+    }
+
+    struct Details {
+        address receiver;
+        address doner;
+        Enums.Organ organ;
     }
 }

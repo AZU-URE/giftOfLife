@@ -1,5 +1,5 @@
-# web3Hack23
-This is the project for web3 conf hack
+# Gift Of Life
+This is a decenatralized organ donation app, where patients, doners and doctors cam come and register themselves alongside their role.
 
 <!-- waiting for deployment
 The address of contract is: 0x8e1fe0936C27A379DBDc9aE9acb83000aD67c8F0

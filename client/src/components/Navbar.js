@@ -46,6 +46,7 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
     return (
         <>
             <nav className='fixed top-0 z-20 bg-slate-400 bg-opacity-50 w-full backdrop-filter backdrop-blur-2xl'>
+                <p className='text-red-500 bg-black p-1 text-center italic'>Warning: Currenly it works only on Mumbai testnet, So make sure you are on the same.</p>
                 <div className='md:flex hidden justify-between font-dmSans p-4 items-center'>
                     <ul className='float-left flex space-x-4 text-white items-center'>
                         <li className='text-mainGreen cursor-pointer italic font-bold'>GiftOfLife</li>

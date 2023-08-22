@@ -3,7 +3,7 @@ import { connect } from '../utils/connect'
 import useConnect from '../hook/useConnect'
 import { BiSolidUser } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
-
+import logo from '../assets/landingPage/logo.png'
 const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
     const navigate = useNavigate()
     const { setAccount, account, setContract } = useConnect()
@@ -47,8 +47,9 @@ const Navbar = ({ aboutRef, ReceiversRef, DoctorRef }) => {
         <>
             <nav className='fixed top-0 z-20 bg-slate-400 bg-opacity-50 w-full backdrop-filter backdrop-blur-2xl'>
                 <div className='md:flex hidden justify-between font-dmSans p-4 items-center'>
-                    <ul className='float-left flex space-x-4 text-white'>
-                        <li className='text-mainGreen cursor-pointer'>logo</li>
+                    <ul className='float-left flex space-x-4 text-white items-center'>
+                        <li className='text-mainGreen cursor-pointer italic font-bold'>GiftOfLife</li>
+                        {/* <img src={logo} alt='Gift Of Life' className='w-16 h-16'></img> */}
                         <li className='cursor-pointer' onClick={clickAbout}>About</li>
                         <li className='cursor-pointer' onClick={clickPatients}>Patients</li>
                         <li className='cursor-pointer' onClick={clickDoctors}>Doctors</li>

@@ -6,6 +6,7 @@ import { useState, useRef } from "react";
 import DonorCard from "./DonorCard";
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom";
+import doner from '../../assets/landingPage/doner.png'
 //   import "./list.scss";
 
 
@@ -37,17 +38,18 @@ const List = () => {
 
 	return (
 
-		<div className="list my-12 px-24">
+		<div className="list py-12 px-24 bg-teal-50">
 			<p className='w-full text-center text-4xl font-dmSans font-medium mb-16'><span className='text-mainGreen'>Our</span>  Donors</p>
-			<div className="wrapper flex justify-between max-w-full items-center w-full overflow-hidden">
-				<ArrowBackIosOutlined
+			{/* <div className="wrapper flex justify-between max-w-full items-center w-full overflow-hidden"> */}
+			{/* <ArrowBackIosOutlined
 					className="sliderArrow"
 					onClick={() => handleClick("left")}
 					style={{ display: !isMoved && "none" }}
-				/>
-				<div className="center flex-1 overflow-x-hidden">
-					<div className="container flex w-fit justify-between gap-8 transition duration-300" ref={listRef}>
-						<DonorCard index={0} />
+				/> */}
+			<div className="flex items-center justify-around ">
+				{/* <div className="center flex-1 overflow-x-hidden"> */}
+				{/* <div className="container flex w-fit justify-between gap-8 transition duration-300" ref={listRef}> */}
+				{/* <DonorCard index={0} />
 						<DonorCard index={1} />
 						<DonorCard index={2} />
 						<DonorCard index={3} />
@@ -65,13 +67,25 @@ const List = () => {
 						<DonorCard index={15} />
 						<DonorCard index={16} />
 						<DonorCard index={17} />
-						<DonorCard index={18} />
-					</div>
-				</div>
-				<ArrowForwardIosOutlined
+						<DonorCard index={18} /> */}
+				{/* </div> */}
+				{/* </div> */}
+				{/* <ArrowForwardIosOutlined
 					className="sliderArrow"
 					onClick={() => handleClick("right")}
-				/>
+				/> */}
+				<p className="w-full text-xl text-green-900 italic">
+					Beneath the quiet stars, unsung heroes we find,<br />
+					Donors of life, their love intertwined.<br />
+					In their selfless act, they gift a new day,<br />
+					Breathing life into dreams, lighting the way.<br />
+
+					In the shadow of anonymity, they quietly shine,<br />
+					Their compassion an echo, an infinite line.<br />
+					With each generous gesture, they end the strife,<br />
+					Transforming their legacy into the <span className="font-bold">gift of life</span> .<br />
+				</p>
+				<img src={doner} alt="doner" className="w-full" />
 			</div>
 			<button className='bg-mainGreen rounded-full hover:bg-teal-800 text-white p-4 mt-8 font-medium text-lg border-white border-[1px] mx-auto flex items-center space-x-4' onClick={viewAllDonors}> <p>Check Out More</p> <BsFillArrowRightCircleFill style={{ fontSize: "24px", style: "bold" }} className='' /> </button>
 		</div>
